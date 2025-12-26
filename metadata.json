@@ -194,5 +194,19 @@
     "githubUrl": "https://github.com/RafliRvx/codes/blob/main/codes/j-1766673700731.js",
     "rawUrl": "https://raw.githubusercontent.com/RafliRvx/codes/main/codes/j-1766673700731.js",
     "filepath": "codes/j-1766673700731.js"
+  },
+  {
+    "id": "ff5ebca91d4b",
+    "name": "Tiktod Downloader",
+    "author": "Anonymous",
+    "language": "javascript",
+    "code": "const axios = require('axios')\nconst cheerio = require('cheerio')\n\nasync function ttsave(url) {\n  const endpoint = 'https://ttsave.app/download'\n\n  const { data: html } = await axios.post(\n    endpoint,\n    {\n      query: url,\n      language_id: '2'\n    },\n    {\n      headers: {\n        'accept': 'application/json, text/plain, */*',\n        'content-type': 'application/json',\n        'origin': 'https://ttsave.app',\n        'referer': 'https://ttsave.app/id'\n      }\n    }\n  )\n\n  const $ = cheerio.load(html)\n\n  const result = {\n    id: $('#unique-id').val() || null,\n    video: {},\n    audio: null,\n    cover: null,\n    profile: null\n  }\n\n  $('a[onclick=\"bdl(this, event)\"]').each((_, el) => {\n    const type = $(el).attr('type')\n    const href = $(el).attr('href')\n\n    if (!href) return\n\n    if (type === 'no-watermark') {\n      result.video.no_watermark = href\n    } else if (type === 'watermark') {\n      result.video.watermark = href\n    } else if (type === 'audio') {\n      result.audio = href\n    } else if (type === 'cover') {\n      result.cover = href\n    } else if (type === 'profile') {\n      result.profile = href\n    }\n  })\n\n  return result\n}\n\n// contoh\n;(async () => {\n  const url = 'https://vt.tiktok.com/ZSPobhBBT/'\n  const res = await ttsave(url)\n  console.log(JSON.stringify(res, null, 2))\n})()",
+    "views": 0,
+    "createdAt": "2025-12-26T17:48:00.101Z",
+    "formattedDate": "Jumat, 26 Desember 2025 pukul 17.48",
+    "githubSuccess": true,
+    "githubUrl": "https://github.com/RafliRvx/codes/blob/main/codes/tiktod-downloader-1766771280102.js",
+    "rawUrl": "https://raw.githubusercontent.com/RafliRvx/codes/main/codes/tiktod-downloader-1766771280102.js",
+    "filepath": "codes/tiktod-downloader-1766771280102.js"
   }
 ]
